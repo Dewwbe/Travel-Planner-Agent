@@ -1,0 +1,6 @@
+"use client";
+import { FormEvent, useState } from "react";
+import { Bot, Send } from "lucide-react";
+type Message={role:"assistant"|"user";content:string};
+export default function ChatPanel(){const [messages,setMessages]=useState<Message[]>([{role:"assistant",content:"Where would you like to go? Tell me your destination, dates, and budget."}]);const [input,setInput]=useState("");function send(e:FormEvent){e.preventDefault();if(!input.trim())return;setMessages(m=>[...m,{role:"user",content:input.trim()},{role:"assistant",content:"Great brief! Stage 1 has captured your request. In Stage 2, I’ll turn it into a structured itinerary using the AI planner."}]);setInput("");}return <section className="panel chatPanel"><div className="panelTitle"><span className="iconBox"><Bot size={18}/></span><div><h2>Plan with TripPilot</h2><p>Describe your ideal trip</p></div></div><div className="messages">{messages.map((m,i)=><div key={i} className={`message ${m.role}`}>{m.content}</div>)}</div><form className="chatInput" onSubmit={send}><input value={input} onChange={e=>setInput(e.target.value)} placeholder="Plan 4 days in Bangkok under $800..."/><button aria-label="Send"><Send size={17}/></button></form></section>}
+
