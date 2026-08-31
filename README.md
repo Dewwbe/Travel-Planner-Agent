@@ -8,8 +8,6 @@ This portfolio project demonstrates full-stack engineering, structured LLM outpu
 
 ## Screenshots
 
-Place `screenshot1.png`, `screenshot2.png`, and `screenshot3.png` in the repository root beside this README.
-
 ### Dashboard
 
 ![TripPilot AI dashboard](./screenshot1.png)
