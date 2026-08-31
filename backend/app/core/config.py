@@ -9,8 +9,8 @@ class Settings(BaseSettings):
 
     # Database
     database_url: str = (
-        "postgresql+psycopg://"
-        "travel:travel_dev_password@localhost:5432/travel_agent"
+        "postgresql+psycopg://travel:"
+        "travel_dev_password@db:5432/travel_agent"
     )
 
     # Authentication
@@ -21,21 +21,32 @@ class Settings(BaseSettings):
     # Frontend
     backend_cors_origins: str = "http://localhost:3000"
 
-    # Stage 2: OpenAI planner
+    # OpenAI
     openai_api_key: str = ""
     openai_model: str = "gpt-5-mini"
 
-    # Stage 3: LiteAPI
+    # LiteAPI / Hotel MCP
     liteapi_api_key: str = ""
     liteapi_base_url: str = "https://api.liteapi.travel/v3.0"
     liteapi_guest_nationality: str = "LK"
-
-    # Hotel MCP service
     hotel_mcp_url: str = "http://hotel-mcp:8001/mcp"
+
+    # Google Calendar
+    google_client_id: str = ""
+    google_client_secret: str = ""
+    google_redirect_uri: str = (
+        "http://localhost:8000/api/v1/calendar/oauth/callback"
+    )
+    google_oauth_success_url: str = (
+        "http://localhost:3000/dashboard?calendar=connected"
+    )
+    calendar_mcp_url: str = "http://calendar-mcp:8002/mcp"
+    token_encryption_key: str = ""
 
     model_config = SettingsConfigDict(
         env_file="../.env",
         extra="ignore",
+        case_sensitive=False,
     )
 
     @property

@@ -18,6 +18,8 @@ services:
   backend:
     build: ./backend
     env_file: .env
+    environment:
+      OAUTHLIB_INSECURE_TRANSPORT: "1"
     ports:
       - "8000:8000"
     volumes:
@@ -25,7 +27,34 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      hotel-mcp:
+        condition: service_started
+      calendar-mcp:
+        condition: service_started
     command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --reload"
+
+  hotel-mcp:
+    build: ./backend
+    env_file: .env
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend:/app
+    command: python -m app.mcp.hotel_server
+
+  calendar-mcp:
+    build: ./backend
+    env_file: .env
+    expose:
+      - "8002"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      OAUTHLIB_INSECURE_TRANSPORT: "1"
+    command: python -m app.mcp.calendar_server
 
   frontend:
     build: ./frontend
@@ -42,4 +71,3 @@ services:
 
 volumes:
   postgres_data:
-

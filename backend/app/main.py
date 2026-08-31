@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.routes import agent, auth, hotels, trips
+from app.api.routes import agent, auth, calendar, hotels, trips
 from app.core.config import settings
 
 app = FastAPI(title=settings.app_name, version="1.0.0")
@@ -9,6 +9,7 @@ app.include_router(auth.router, prefix=settings.api_v1_prefix)
 app.include_router(trips.router, prefix=settings.api_v1_prefix)
 app.include_router(agent.router, prefix=settings.api_v1_prefix)
 app.include_router(hotels.router, prefix=settings.api_v1_prefix)
+app.include_router(calendar.router, prefix=settings.api_v1_prefix)
 
 @app.get("/health", tags=["System"])
 def health():

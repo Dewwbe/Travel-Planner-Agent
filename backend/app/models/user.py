@@ -11,4 +11,5 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     trips = relationship("Trip", back_populates="user", cascade="all, delete-orphan")
-
+    calendar_credential = relationship("CalendarCredential", back_populates="user", cascade="all, delete-orphan", uselist=False)
+    memories = relationship("UserMemory", back_populates="user", cascade="all, delete-orphan")
